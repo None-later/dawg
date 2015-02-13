@@ -1,0 +1,32 @@
+{
+  "name": "DAWG",
+  "version": "1.0.0",
+  "authors": [
+    "Deryck Henson <deryck.henson@gmail.com>"
+  ],
+  "description": "Management application for the US Air Force Deployment Availability Working Group (DAWG).",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "air force",
+    "dawg",
+    "medical",
+    "deployment"
+  ],
+  "license": "",
+  "homepage": "http://dawg.fleeceitout.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ],
+  "dependencies": {
+    "lodash": ">=3.1.0",
+    "normalize-scss": "~3.0.2",
+    "reqwest": "~1.1.5",
+    "snabbt.js": "~0.3.0",
+    "react": "~0.12.2",
+    "flux": "~2.0.2"
+  }
+}
