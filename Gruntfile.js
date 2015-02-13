@@ -120,7 +120,13 @@ module.exports = function(grunt) {
               'src/lib/react/react-with-addons.min.js',
               'src/lib/flux/dist/Flux.js',
               'src/lib/snabbt.js/snabbt.min.js',
-              'src/js/app.js'
+              'dist/js/libs.js'
+            ],
+            dest: 'dist/js/libs.min.js'
+          },
+          {
+            src: [
+              'dist/js/app.js'
             ],
             dest: 'dist/js/app.min.js'
           }
