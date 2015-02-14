@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+
+    <title>snabbt.js</title>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-58043335-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script type="text/javascript" src="randomColor.js"></script>
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+
+    <style>
+      body, html {
+        height: 100%;
+      }
+      body {
+        transform: translateZ(1000px);
+        -webkit-transform: translateZ(1000px);
+      }
+      #container {
+        width: 100%;
+        height: 80%;
+        margin: auto;
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+      }
+      #surface {
+        width: 100%;
+        height: 80%;
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+      }
+      .card {
+        position: absolute;
+        border-radius: 10%;
+        /* Fix jagged edges in firefox */
+        outline: 1px solid transparent;
+      }
+      #toolbar {
+        text-align: center;
+      }
+      p {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body onload="init()">
+    <div id="container">
+      <div id="surface">
+      </div>
+    </div>
+
+    <div id="toolbar" class="container">
+      <button id="pile_button">Pile</button>
+      <button id="house_button">House</button>
+      <button id="wall_button" class="button-primary">Wall</button>
+      <button id="cylinder_button">Cylinder</button>
+    </div>
+    <div class="container">
+      <p>DOM elements animated with <a href="index.html">snabbt.js</a>.</p>
+    </div>
+
+    <script src="fastclick.js"></script>
+    <script src="snabbt.min.js"></script>
+    <script src="cards.js"></script>
+  </body>
+</html>
+
+

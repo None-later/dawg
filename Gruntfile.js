@@ -25,12 +25,17 @@ module.exports = function(grunt) {
     uncss: {
       dist: {
         files: {
-          'src/css/app.un.css': ['src/index.html']
+          'src/css/app.uncss': ['dist/index.html']
+        }
+      },
+      dev: {
+        files: {
+          'src/css/app.uncss': ['dist/index.html']
         }
       },
       first: {
         files: {
-          'dist/css/app.un.css': ['dist/index.html']
+          'dist/css/app.uncss': ['dist/index.html']
         }
       }
     },
@@ -42,17 +47,17 @@ module.exports = function(grunt) {
       dist: {
         expand: true,
         flatten: true,
-        src: 'src/css/*.css',
+        src: 'src/css/*.uncss',
         dest: 'src/css/'
       },
       first: {
-        src: 'dist/css/app.un.css',
-        dest: 'dist/css/app.pfx.css'
+        src: 'dist/css/app.uncss',
+        dest: 'dist/css/app.css'
       },
       dev: {
         expand: true,
         flatten: true,
-        src: 'src/css/*.css',
+        src: 'src/css/**/*.uncss',
         dest: 'src/css/'
       }
     },
@@ -63,17 +68,17 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/css/app.min.css': ['src/css/app.pfx.css']
+          'dist/css/app.min.css': ['src/css/app.css']
         }
       },
       dev: {
         files: {
-          'dist/css/app.min.css': ['src/css/app.pfx.css']
+          'dist/css/app.min.css': ['src/css/app.css']
         }
       },
       first: {
         files: {
-          'dist/css/app.min.css': ['dist/css/app.pfx.css']
+          'dist/css/app.min.css': ['dist/css/app.css']
         }
       }
     },
@@ -83,8 +88,30 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'src/js/jsx',
-            src: ['src/js/jsx/**/*.jsx'],
+            src: ['**/*.jsx'],
             dest: 'src/js',
+            ext: '.js'
+          }
+        ]
+      },
+      dev: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/js/jsx',
+            src: ['**/*.jsx'],
+            dest: 'src/js',
+            ext: '.js'
+          }
+        ]
+      },
+      first: {
+        files: [
+          {
+            expand: true,
+            cwd: 'dist/js/jsx',
+            src: ['**/*.jsx'],
+            dest: 'dist/js',
             ext: '.js'
           }
         ]
@@ -100,8 +127,15 @@ module.exports = function(grunt) {
         files: [
           {
             src: [
-              'src/js/util.js',
+              'src/lib/react/react-with-addons.min.js',
+              'src/lib/flux/dist/Flux.js',
               'src/lib/snabbt.js/snabbt.min.js',
+              'dist/js/libs.js'
+            ],
+            dest: 'dist/js/app.min.js'
+          },
+          {
+            src: [
               'src/js/app.js'
             ],
             dest: 'dist/js/app.min.js'
@@ -110,9 +144,10 @@ module.exports = function(grunt) {
       },
       first: {
         options: {
-          compress: true,
-          wrap: false,
-          mangle: false
+          compress: false,
+          beautify: true,
+          mangle: false,
+          wrap: false
         },
         files: [
           {
@@ -142,10 +177,15 @@ module.exports = function(grunt) {
         files: [
           {
             src: [
-              'src/js/util.js',
               'src/lib/react/react-with-addons.min.js',
               'src/lib/flux/dist/Flux.js',
               'src/lib/snabbt.js/snabbt.min.js',
+              'dist/js/libs.js'
+            ],
+            dest: 'dist/js/libs.min.js'
+          },
+          {
+            src: [
               'src/js/app.js'
             ],
             dest: 'dist/js/app.min.js'
@@ -202,19 +242,19 @@ module.exports = function(grunt) {
         },
         files: ['Gruntfile.js']
       },
-      sass: {
+      /*sass: {
         options: {
           debounceDelay: 25,
           spawn: false,
           atBegin: true
         },
-        files: ['src/scss/**/*'],
+        files: ['src/scss/!**!/!*'],
         tasks: ['sass:dev']
-      },
+      },*/
       gifsvg: {
         options: {
           debounceDelay: 25,
-          spawn: false,
+          spawn: true,
           atBegin: true
         },
         files: [
@@ -225,7 +265,7 @@ module.exports = function(grunt) {
       pngjpg: {
         options: {
           debounceDelay: 25,
-          spawn: false,
+          spawn: true,
           atBegin: true
         },
         files: [
@@ -236,25 +276,33 @@ module.exports = function(grunt) {
       jsx: {
         options: {
           debounceDelay: 25,
-          spawn: false,
+          spawn: true,
           atBegin: true
         },
-
         files: [
-          'src/js/**/*.jsx'
+          'src/js/jsx/**/*.jsx'
         ],
-        tasks: ['react','uglify:dev']
+        tasks: ['react:dev','uglify:dev']
       },
       scripts: {
         options: {
           debounceDelay: 25,
-          spawn: false,
-          atBegin: true
+          spawn: true,
+          atBegin: false
         },
         files: [
           'src/lib/**/*.js'
         ],
         tasks: ['uglify:dev']
+      },
+      css: {
+        options: {
+          debounceDelay: 25,
+          spawn: true,
+          atBegin: true
+        },
+        files: ['src/css/**/*.css', 'dist/index.html'],
+        tasks: ['react:dev', 'uncss:dev', 'autoprefixer:dev', 'cssmin:dev']
       }
     }
   });
@@ -270,8 +318,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-tinypng');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('first', [/*'sass:dist', */ 'uncss:first','autoprefixer:first', 'cssmin:first', 'react:dist', 'uglify:first', 'newer:imagemin', 'tinypng']);
-  grunt.registerTask('default', [/*'sass:dist', */ 'autoprefixer:dist', 'cssmin:dist', 'uncss:dist', 'react:dist', 'uglify:dist', 'newer:imagemin', 'tinypng']);
-  grunt.registerTask('build', [/*'sass:dist', */ 'autoprefixer:dist', 'cssmin:dist', 'uncss:dist', 'react:dist', 'uglify:dist', 'imagemin', 'tinypng']);
-  grunt.registerTask('dev', [/*'sass:dev', */ 'autoprefixer:dev', 'cssmin:dev', 'uncss:dev', 'react:dev', 'uglify:dev', 'newer:imagemin', 'tinypng']);
+  grunt.registerTask('first', [/*'sass:dist', */ 'uncss:first','autoprefixer:first', 'cssmin:first', 'react:first', 'uglify:first', 'newer:imagemin', 'tinypng']);
+  grunt.registerTask('default', [/*'sass:dist', */ 'uncss:dist', 'autoprefixer:dist', 'cssmin:dist',  'react:dist', 'uglify:dist', 'newer:imagemin', 'tinypng']);
+  grunt.registerTask('build', [/*'sass:dist', */ 'uncss:dist', 'autoprefixer:dist', 'cssmin:dist',  'react:dist', 'uglify:dist', 'imagemin', 'tinypng']);
+  grunt.registerTask('dev', [/*'sass:dev', */ 'uncss:dev', 'autoprefixer:dev', 'cssmin:dev', 'react:dev', 'uglify:dev', 'newer:imagemin', 'tinypng']);
 };

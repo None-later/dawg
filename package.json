@@ -28,7 +28,7 @@
     "grunt-contrib-uglify": ">=0.5.0",
     "grunt-contrib-watch": ">=0.6.1",
     "grunt-newer": ">=1.1.0",
-    "grunt-react": ">=0.10.0",
+    "grunt-react": ">=0.12.0",
     "grunt-tinypng": ">=0.5.3",
     "grunt-uncss": "^0.4.0"
   }
